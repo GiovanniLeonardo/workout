@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fit50 Squad // SheetDB</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-500/30">
+
+    <header class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 px-4 py-3 flex items-center justify-between">
+        <div>
+            <span class="text-xs font-bold tracking-widest text-emerald-500 uppercase">SHEETDB SQUAD</span>
+            <h1 class="text-lg font-bold text-slate-100 flex items-center gap-1">FitLife <span class="font-light text-slate-400">] PRO</span></h1>
+        </div>
+        <div class="bg-slate-800 border border-slate-700 rounded-full px-3 py-1 flex items-center gap-1.5">
+            <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+            <span id="userBadge" class="text-xs font-medium text-slate-300" onclick="changeName()">Loading...</span>
+        </div>
+    </header>
+
+    <main class="flex-1 overflow-y-auto px-4 py-6 max-w-md mx-auto w-full pb-24">
+        
+        <div id="workoutView" class="space-y-6">
+            <div class="grid grid-cols-3 gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800" id="dayTabs">
+                </div>
+
+            <div class="bg-emerald-950/20 border border-emerald-500/20 rounded-xl p-3 text-xs text-slate-400">
+                🎯 <strong class="text-emerald-400">Lean & Cut:</strong> Keeping reps high (12-15 range) and breaks short. Log your stats to sync with the team Google Sheet.
+            </div>
+
+            <div id="exerciseContainer" class="space-y-4">
+                </div>
+
+            <button onclick="submitWorkout()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-4 rounded-xl shadow-lg shadow-emerald-500/10 transition-all active:scale-[0.99] cursor-pointer text-center text-sm">
+                Finish & Log Workout To Feed
+            </button>
+        </div>
+
+        <div id="feedView" class="space-y-4 hidden">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="text-sm font-semibold tracking-wider text-slate-400 uppercase">Squad Activity Feed</h2>
+                <button onclick="fetchFeed()" class="text-xs text-emerald-400 font-medium bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-lg">Refresh</button>
+            </div>
+            <div id="feedContainer" class="space-y-3">
+                </div>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/90 backdrop-blur-lg border-t border-slate-800 px-6 py-2 max-w-md mx-auto rounded-t-2xl shadow-2xl">
+        <div class="flex justify-around items-center">
+            <button id="navWorkout" onclick="switchTab('workout')" class="flex flex-col items-center gap-1 py-1 px-4 text-emerald-400 transition-colors cursor-pointer">
+                <span class="text-lg">🏋️‍♂️</span>
+                <span class="text-[10px] font-semibold tracking-wide">Workout</span>
+            </button>
+            <button id="navFeed" onclick="switchTab('feed')" class="flex flex-col items-center gap-1 py-1 px-4 text-slate-400 hover:text-slate-200 transition-colors cursor-pointer">
+                <span class="text-lg">🔥</span>
+                <span class="text-[10px] font-semibold tracking-wide">Squad Feed</span>
+            </button>
+        </div>
+    </nav>
+
+    <script>
+        // PASTE YOUR UNIQUE SHEETDB API URL HERE
+        const SHEETDB_API_URL = "https://sheetdb.io/api/v1/o8eo17xa2gyvq"; 
+
+        // Core 50+ Lean Workout Framework
+        const workoutProgram = {
+            "Legs & Core": [
+                { id: "l1", name: "DB Goblet Squats", target: "4 Sets x 12-15 Reps", sets: [0, 0, 0, 0] },
+                { id: "l2", name: "Dumbbell Romanian Deadlifts", target: "3 Sets x 12 Reps", sets: [0, 0, 0] },
+                { id: "c1", name: "Hanging Knee Raises", target: "3 Sets x Max Reps", sets: [0, 0, 0] }
+            ],
+            "Chest & Shoulders": [
+                { id: "p1", name: "Incline DB Press", target: "4 Sets x 12 Reps", sets: [0, 0, 0, 0] },
+                { id: "p2", name: "Tempo Push-Ups", target: "3 Sets x 15 Reps", sets: [0, 0, 0] },
+                { id: "s1", name: "Dumbbell Lateral Raises", target: "4 Sets x 15 Reps", sets: [0, 0, 0, 0] }
+            ],
+            "Back, Arms & Core": [
+                { id: "b1", name: "Chest-Supported DB Rows", target: "4 Sets x 12 Reps", sets: [0, 0, 0, 0] },
+                { id: "bi1", name: "Incline DB Bicep Curls", target: "3 Sets x 12 Reps", sets: [0, 0, 0] },
+                { id: "c2", name: "RKC Plank", target: "3 Sets x 30s Hold", sets: [0, 0, 0] }
+            ]
+        };
+
+        let currentDay = Object.keys(workoutProgram)[0];
+        let userName = localStorage.getItem('fit50_name') || "Athlete_" + Math.floor(Math.random() * 900 + 100);
+
+        function init() {
+            localStorage.setItem('fit50_name', userName);
+            document.getElementById('userBadge').innerText = userName;
+            renderTabs();
+            renderExercises();
+            fetchFeed();
+        }
+
+        function changeName() {
+            const newName = prompt("Enter your name for the tracker:", userName);
+            if(newName && newName.trim().length > 1) {
+                userName = newName.trim();
+                localStorage.setItem('fit50_name', userName);
+                document.getElementById('userBadge').innerText = userName;
+            }
+        }
+
+        function renderTabs() {
+            const container = document.getElementById('dayTabs');
+            container.innerHTML = '';
+            Object.keys(workoutProgram).forEach(day => {
+                const isActive = day === currentDay;
+                container.innerHTML += `
+                    <button onclick="selectDay('${day}')" class="text-[11px] font-semibold tracking-tight py-2.5 rounded-lg transition-all cursor-pointer text-center ${isActive ? 'bg-slate-800 text-emerald-400 border border-slate-700' : 'text-slate-400 hover:text-slate-200' }">
+                        ${day.split(' & ')[0]}
+                    </button>
+                `;
+            });
+        }
+
+        function selectDay(day) {
+            currentDay = day;
+            renderTabs();
+            renderExercises();
+        }
+
+        function renderExercises() {
+            const container = document.getElementById('exerciseContainer');
+            container.innerHTML = '';
+
+            workoutProgram[currentDay].forEach(ex => {
+                let inputsHTML = '';
+                ex.sets.forEach((weight, i) => {
+                    inputsHTML += `
+                        <div class="flex items-center justify-between bg-slate-950/40 border border-slate-800/60 rounded-xl px-3 py-2">
+                            <span class="text-[11px] font-medium text-slate-500">SET ${i+1}</span>
+                            <div class="flex items-center gap-2">
+                                <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="-" 
+                                    value="${weight || ''}" 
+                                    onchange="updateSet('${ex.id}', ${i}, this.value)"
+                                    class="w-12 bg-slate-900 text-center text-xs font-semibold text-emerald-400 border border-slate-700 py-1 rounded-md focus:outline-none focus:border-emerald-500" />
+                                <span class="text-[10px] text-slate-600">lbs</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML += `
+                    <div class="bg-slate-900 border border-slate-800/70 rounded-2xl p-4 space-y-3">
+                        <div>
+                            <h3 class="text-sm font-bold tracking-tight text-slate-100">${ex.name}</h3>
+                            <p class="text-[11px] text-emerald-400 font-medium mt-0.5">${ex.target}</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                            ${inputsHTML}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function updateSet(exId, setIdx, val) {
+            const exercise = workoutProgram[currentDay].find(e => e.id === exId);
+            if(exercise) exercise.sets[setIdx] = parseInt(val) || 0;
+        }
+
+        function switchTab(target) {
+            const workoutView = document.getElementById('workoutView');
+            const feedView = document.getElementById('feedView');
+            const navWorkout = document.getElementById('navWorkout');
+            const navFeed = document.getElementById('navFeed');
+
+            if (target === 'workout') {
+                workoutView.classList.remove('hidden');
+                feedView.classList.add('hidden');
+                navWorkout.className = "flex flex-col items-center gap-1 py-1 px-4 text-emerald-400 transition-colors cursor-pointer";
+                navFeed.className = "flex flex-col items-center gap-1 py-1 px-4 text-slate-400 transition-colors cursor-pointer";
+            } else {
+                workoutView.classList.add('hidden');
+                feedView.classList.remove('hidden');
+                navWorkout.className = "flex flex-col items-center gap-1 py-1 px-4 text-slate-400 transition-colors cursor-pointer";
+                navFeed.className = "flex flex-col items-center gap-1 py-1 px-4 text-emerald-400 transition-colors cursor-pointer";
+                fetchFeed();
+            }
+        }
+
+        // POST Data to Google Sheet via SheetDB API
+        async function submitWorkout() {
+            if(SHEETDB_API_URL === "YOUR_SHEETDB_API_URL") {
+                alert("Please add your SheetDB API URL inside the script tag code first!");
+                return;
+            }
+
+            const currentExercises = workoutProgram[currentDay];
+            let summaryParts = [];
+            
+            currentExercises.forEach(ex => {
+                const maxWeight = Math.max(...ex.sets);
+                if (maxWeight > 0) {
+                    summaryParts.push(`${ex.name} (${maxWeight}lbs)`);
+                } else {
+                    summaryParts.push(`${ex.name} (Done)`);
+                }
+            });
+
+            const summaryString = summaryParts.join(', ');
+
+            const payload = {
+                data: [
+                    { user_name: userName, workout_day: currentDay, summary: summaryString }
+                ]
+            };
+
+            try {
+                const response = await fetch(SHEETDB_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    alert("🔥 Workout logged directly to Google Sheets!");
+                    switchTab('feed');
+                } else {
+                    alert("Failed to save to Google Sheets.");
+                }
+            } catch (error) {
+                console.error("Error writing to SheetDB:", error);
+                alert("Network error trying to connect to SheetDB.");
+            }
+        }
+
+        // GET Data from Google Sheet via SheetDB API
+        async function fetchFeed() {
+            if(SHEETDB_API_URL === "YOUR_SHEETDB_API_URL") return;
+
+            const container = document.getElementById('feedContainer');
+            container.innerHTML = `<p class="text-center text-xs text-slate-500 py-6 animate-pulse">Fetching from Google Sheet network...</p>`;
+
+            try {
+                const response = await fetch(SHEETDB_API_URL);
+                if (!response.ok) throw new Error("Could not fetch data");
+                
+                let data = await response.json();
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = `<p class="text-center text-xs text-slate-500 py-8">No workouts logged yet. Smash a session and post it!</p>`;
+                    return;
+                }
+
+                // Reverse the array so the latest entries show up at the top
+                data.reverse();
+
+                container.innerHTML = '';
+                // Cap layout rendering at the 20 most recent logs
+                data.slice(0, 20).forEach(item => {
+                    container.innerHTML += `
+                        <div class="bg-slate-900 border border-slate-800/80 rounded-xl p-4 space-y-2">
+                            <div class="flex justify-between items-center border-b border-slate-800/50 pb-2">
+                                <span class="text-sm font-bold text-emerald-400">⚡ ${item.user_name}</span>
+                                <span class="text-[10px] font-mono text-slate-500">Live Logs</span>
+                            </div>
+                            <div>
+                                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wide block">${item.workout_day}</span>
+                                <p class="text-xs text-slate-300 leading-relaxed mt-1">${item.summary}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error("Error reading from SheetDB:", error);
+                container.innerHTML = `<p class="text-center text-xs text-rose-400 py-6">Could not pull database logs.</p>`;
+            }
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
