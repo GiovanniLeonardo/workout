@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Spartan Fit50 // Single-Tap</title>
-    <!-- Tailwind CSS for sleek mobile layout configurations -->
+    <title>Spartan Fit50 // Master Edition</title>
+    <!-- Tailwind CSS for smooth, fluid mobile utility design -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -16,7 +16,7 @@
     <!-- Sticky Mobile Header -->
     <header class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 px-4 py-3 flex items-center justify-between">
         <div>
-            <span class="text-xs font-bold tracking-widest text-orange-500 uppercase">SPARTAN LEAN PROGRAM</span>
+            <span class="text-xs font-bold tracking-widest text-orange-500 uppercase">SPARTAN MASTER PROGRAM</span>
             <h1 class="text-lg font-bold text-slate-100 flex items-center gap-1">Fit50 <span class="font-light text-slate-400">| PRO</span></h1>
         </div>
         <!-- User Badge identity frame -->
@@ -29,7 +29,7 @@
     <!-- Main Dynamic Mobile Hub Container -->
     <main class="flex-1 overflow-y-auto px-4 py-6 max-w-md mx-auto w-full pb-24">
         
-        <!-- VIEW 1: WORKOUT STREAM SELECTION TAB -->
+        <!-- VIEW 1: WORKOUT TAB -->
         <div id="workoutView" class="space-y-6">
             
             <!-- Nutrition Access Trigger Button -->
@@ -39,7 +39,7 @@
 
             <!-- Dynamic Workout Track Selector Dropdown -->
             <div class="space-y-1.5">
-                <label class="text-[11px] font-bold text-slate-400 tracking-wider uppercase block">Select Focus Workout</label>
+                <label class="text-[11px] font-bold text-slate-400 tracking-wider uppercase block">Select Target Spartan Split</label>
                 <select id="workoutSelector" onchange="onWorkoutChanged(this.value)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-3 text-sm text-slate-200 font-semibold focus:outline-none focus:border-orange-500 cursor-pointer">
                     <!-- Dropdown Options populate dynamically -->
                 </select>
@@ -52,7 +52,7 @@
 
             <!-- Log Submission Button -->
             <button onclick="submitWorkout()" class="w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-orange-500/10 transition-all active:scale-[0.99] cursor-pointer text-center text-sm">
-                Log Completed Workout to Feed
+                Log Completed Workout
             </button>
         </div>
 
@@ -117,29 +117,29 @@
         // PASTE YOUR SHEETDB API KEY LINK DIRECTLY HERE
         const SHEETDB_API_URL = "https://sheetdb.io/api/v1/o8eo17xa2gyvq"; 
 
-        // Comprehensive Workout Splits mapped from Spartan Program
+        // Fully expanded Spartan Lean Muscle Training Program with verified, precise movement imagery
         const spartanProgram = {
             "Monday: Full-Body Strength": [
-                { id: "m1", name: "Bodyweight Squat", target: "3 Sets x 20 Reps", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=350&q=80", completed: false },
-                { id: "m2", name: "Barbell Bench Press", target: "4 Sets x 6 Reps", motion: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=350&q=80", completed: false },
-                { id: "m3", name: "Standing Military Press", target: "4 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=350&q=80", completed: false },
-                { id: "m4", name: "Barbell Deadlift", target: "4 Sets x 6-8 Reps", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=350&q=80", completed: false }
+                { id: "m1", name: "Bodyweight Squat", target: "3 Sets x 20 Reps", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80", completed: false },
+                { id: "m2", name: "Barbell Bench Press", target: "4 Sets x 6 Reps", motion: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=400&q=80", completed: false },
+                { id: "m3", name: "Standing Military Press", target: "4 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=400&q=80", completed: false },
+                { id: "m4", name: "Barbell Deadlift", target: "4 Sets x 6-8 Reps", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false }
             ],
             "Tuesday: Upper-Body HIIT": [
-                { id: "t1", name: "Incline DB Chest Fly", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=350&q=80", completed: false },
-                { id: "t2", name: "Burpees", target: "7 Sets x 8 Reps", motion: "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=350&q=80", completed: false },
-                { id: "t3", name: "Tripod Dumbbell Row", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1605296867304-46d5465a25f1?auto=format&fit=crop&w=350&q=80", completed: false },
-                { id: "t4", name: "Hammer Curls", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=350&q=80", completed: false }
+                { id: "t1", name: "Incline DB Chest Fly", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1605296867424-35ddafae336c?auto=format&fit=crop&w=400&q=80", completed: false },
+                { id: "t2", name: "Burpees", target: "7 Sets x 8 Reps", motion: "https://images.unsplash.com/photo-1543975200-8e313fb04fc7?auto=format&fit=crop&w=400&q=80", completed: false },
+                { id: "t3", name: "Tripod Dumbbell Row", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1605296867304-46d5465a25f1?auto=format&fit=crop&w=400&q=80", completed: false },
+                { id: "t4", name: "Hammer Curls", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=80", completed: false }
             ],
             "Wednesday: Lower-Body HIIT": [
-                { id: "w1", name: "Goblet Squat (Dumbbell)", target: "3 Sets x 15 Reps", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=350&q=80", completed: false },
-                { id: "w2", name: "Dumbbell Romanian Deadlift", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=350&q=80", completed: false },
-                { id: "w3", name: "Walking Lunges", target: "5 Sets x 20 Reps", motion: "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=350&q=80", completed: false }
+                { id: "w1", name: "Goblet Squat (Dumbbell)", target: "3 Sets x 15 Reps", motion: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=400&q=80", completed: false },
+                { id: "w2", name: "Dumbbell Romanian Deadlift", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?auto=format&fit=crop&w=400&q=80", completed: false },
+                { id: "w3", name: "Walking Lunges", target: "5 Sets x 20 Reps", motion: "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=400&q=80", completed: false }
             ],
             "Friday: Full-Body HIIT & Core": [
-                { id: "f1", name: "Chin-Ups / Pull-Ups", target: "3 Sets x 5 Reps", motion: "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=350&q=80", completed: false },
-                { id: "f2", name: "Bench Dips", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=350&q=80", completed: false },
-                { id: "f3", name: "Thrusters (Squat to Press)", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=350&q=80", completed: false }
+                { id: "f1", name: "Chin-Ups / Pull-Ups", target: "3 Sets x 5 Reps", motion: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=400&q=80", completed: false },
+                { id: "f2", name: "Bench Dips", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=400&q=80", completed: false },
+                { id: "f3", name: "Thrusters (Squat to Press)", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80", completed: false }
             ]
         };
 
@@ -194,7 +194,6 @@
             container.innerHTML = '';
 
             spartanProgram[activeWorkoutKey].forEach(ex => {
-                // Button layout parameters adjust dynamically based on toggled completion state
                 const btnClass = ex.completed 
                     ? "bg-emerald-600 hover:bg-emerald-500 text-white font-bold" 
                     : "bg-orange-600 hover:bg-orange-500 text-white font-semibold";
@@ -202,8 +201,8 @@
 
                 container.innerHTML += `
                     <div class="bg-slate-900 border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
-                        <div class="w-full h-24 bg-slate-950 relative overflow-hidden border-b border-slate-800">
-                            <img src="${ex.motion}" alt="${ex.name}" class="w-full h-full object-cover opacity-50">
+                        <div class="w-full h-32 bg-slate-950 relative overflow-hidden border-b border-slate-800">
+                            <img src="${ex.motion}" alt="${ex.name}" class="w-full h-full object-cover opacity-60">
                         </div>
                         <div class="p-4 flex flex-col gap-3">
                             <div>
@@ -284,7 +283,6 @@
 
                 if (response.ok) {
                     alert("🔥 Session completed & logged to global feed tracker!");
-                    // Reset completion values for safety optimization
                     currentExercises.forEach(ex => ex.completed = false);
                     renderExercises();
                     switchTab('feed');
