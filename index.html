@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Spartan Fit50 // Full Program</title>
+    <title>Spartan Fit50 // Media Hub</title>
     <!-- Tailwind CSS for mobile interface utility design -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
     <!-- Sticky Mobile Header -->
     <header class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 px-4 py-3 flex items-center justify-between">
         <div>
-            <span class="text-xs font-bold tracking-widest text-orange-500 uppercase">SPARTAN OFFICIAL PLAN</span>
+            <span class="text-xs font-bold tracking-widest text-orange-500 uppercase">SPARTAN + WORKOUTBODY</span>
             <h1 class="text-lg font-bold text-slate-100 flex items-center gap-1">Fit50 <span class="font-light text-slate-400">| PRO</span></h1>
         </div>
         <!-- User Badge identity frame -->
@@ -39,7 +39,7 @@
 
             <!-- Dynamic Workout Track Selector Dropdown -->
             <div class="space-y-1.5">
-                <label class="text-[11px] font-bold text-slate-400 tracking-wider uppercase block">Select Target Spartan Split</label>
+                <label class="text-[11px] font-bold text-slate-400 tracking-wider uppercase block">Select Active Routine Split</label>
                 <select id="workoutSelector" onchange="onWorkoutChanged(this.value)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-3 text-sm text-slate-200 font-semibold focus:outline-none focus:border-orange-500 cursor-pointer">
                     <!-- Dropdown Options populate dynamically via JS -->
                 </select>
@@ -117,77 +117,41 @@
         // PASTE YOUR SHEETDB API KEY LINK DIRECTLY HERE
         const SHEETDB_API_URL = "https://sheetdb.io/api/v1/o8eo17xa2gyvq"; 
 
-        // ALL exercises from the official 4-Week Spartan Lean Program with verified, context-accurate imagery
+        // Fully comprehensive multi-track program combining Spartan splits with premium @WORKOUTBody programming
         const spartanProgram = {
             "Monday: Full-Body Strength": [
-                { id: "m1a", name: "1A. Bodyweight Squat", target: "3 Sets x 20 Reps (Superset)", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "m1b", name: "1B. Push-Up", target: "3 Sets x 10 Reps (Superset)", motion: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "m1c", name: "1C. Sit-Up", target: "3 Sets x 12 Reps (Superset)", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "m2", name: "2. Barbell Bench Press", target: "4 Sets x 6 Reps", motion: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "m3", name: "3. Barbell Squat", target: "4 Sets x 8 Reps", motion: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "m4", name: "4. Standing Military Press", target: "4 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "m5", name: "5. Barbell Deadlift", target: "4 Sets x 6-8 Reps", motion: "https://images.unsplash.com/photo-1605296867304-46d5465a25f1?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "m6a", name: "6A. Jumping Split Squat", target: "3 Sets x 20 Reps (Superset)", motion: "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "m6b", name: "6B. Elbow Plank", target: "3 Sets x 30 Sec Hold (Superset)", motion: "https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "m6c", name: "6C. Jack Knife Crunch", target: "3 Sets x 10 Reps (Superset)", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false }
+                { id: "m1a", name: "1A. Bodyweight Squat", target: "3 Sets x 20 Reps", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
+                { id: "m1b", name: "1B. Push-Up", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
+                { id: "m2", name: "2. Barbell Bench Press", target: "4 Sets x 6 Reps", motion: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=dUh2d8kjuyQ", completed: false },
+                { id: "m4", name: "3. Standing Military Press", target: "4 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=G9SYHY5shwc", completed: false },
+                { id: "m5", name: "4. Barbell Deadlift", target: "4 Sets x 6-8 Reps", motion: "https://images.unsplash.com/photo-1605296867304-46d5465a25f1?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=dUh2d8kjuyQ", completed: false }
             ],
             "Tuesday: Upper-Body HIIT": [
-                { id: "t0", name: "Warmup: Cardio Running", target: "Continuous 2-Mile Jog", motion: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "t1a", name: "1A. Incline DB Chest Fly", target: "3 Sets x 10 Reps (Superset)", motion: "https://images.unsplash.com/photo-1605296867424-35ddafae336c?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "t1b", name: "1B. Incline Hex Press", target: "3 Sets x 10 Reps (Superset)", motion: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "t2", name: "2. Burpee", target: "7 Sets x 8 Reps", motion: "https://images.unsplash.com/photo-1543975200-8e313fb04fc7?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "t3a", name: "3A. Tripod Row (Single-Arm)", target: "3 Sets x 10 Reps / Side (Superset)", motion: "https://images.unsplash.com/photo-1605296867304-46d5465a25f1?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "t3b", name: "3B. Dumbbell Shrug", target: "3 Sets x 15 Reps (Superset)", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "t4a", name: "4A. Hammer Curl", target: "3 Sets x 12 Reps (Superset)", motion: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "t4b", name: "4B. Tricep Kickback", target: "3 Sets x 10 Reps / Side (Superset)", motion: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "t5", name: "5. Mountain Climber", target: "4 Sets x 30 Seconds", motion: "https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?auto=format&fit=crop&w=400&q=80", completed: false }
+                { id: "t0", name: "Warmup: Cardio Running", target: "Continuous 2-Mile Jog", motion: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=dUh2d8kjuyQ", completed: false },
+                { id: "t1a", name: "1A. Incline DB Chest Fly", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1605296867424-35ddafae336c?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
+                { id: "t2", name: "2. Burpee", target: "7 Sets x 8 Reps", motion: "https://images.unsplash.com/photo-1543975200-8e313fb04fc7?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
+                { id: "t3a", name: "3A. Tripod Row (Single-Arm)", target: "3 Sets x 10 Reps / Side", motion: "https://images.unsplash.com/photo-1605296867304-46d5465a25f1?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=xaf-d-sigzg", completed: false },
+                { id: "t4a", name: "4A. Hammer Curl", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false }
             ],
             "Wednesday: Lower-Body HIIT": [
-                { id: "w0a", name: "Cardio Block A", target: "4 Miles on Stationary Bike", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "w1a", name: "1A. Goblet Squat (Dumbbell)", target: "3 Sets x 15 Reps (Superset)", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "w1b", name: "1B. Romanian Deadlift (Dumbbell)", target: "3 Sets x 12 Reps (Superset)", motion: "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "w2", name: "2. Walking Lunge", target: "5 Sets x 20 Reps Total Steps", motion: "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "w3a", name: "3A. Glute Bridge (With Bands)", target: "3 Sets x 12 Reps (Superset)", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "w3b", name: "3B. Alternate Heel Toucher", target: "3 Sets x 20 Reps (Superset)", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "w3c", name: "3C. Bicycle Crunch", target: "3 Sets x 30 Reps (Superset)", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "w0b", name: "Cardio Block B", target: "2 Miles on Stationary Bike", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "w4a", name: "4A. Jump Squat", target: "3 Sets x 10 Reps (Superset)", motion: "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "w4b", name: "4B. Side Elbow Plank", target: "3 Sets x 30 Sec / Side (Superset)", motion: "https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=400&q=80", completed: false }
-            ],
-            "Thursday: Full Rest & Recovery": [
-                { id: "th1", name: "Foam Rolling & Mobility Scans", target: "15-20 Minutes Focus Session", motion: "https://images.unsplash.com/photo-1600881333168-2ef49b341f30?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "th2", name: "Full Body Dynamic Stretching", target: "10-15 Minutes Flow", motion: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80", completed: false }
+                { id: "w0a", name: "Cardio Block: Gym Bike Walk", target: "4 Miles Stationary Run", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=dUh2d8kjuyQ", completed: false },
+                { id: "w1a", name: "1A. Goblet Squat (Dumbbell)", target: "3 Sets x 15 Reps", motion: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
+                { id: "w1b", name: "1B. Romanian Deadlift (Dumbbell)", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=dUh2d8kjuyQ", completed: false },
+                { id: "w2", name: "2. Walking Lunge", target: "5 Sets x 20 Reps Total Steps", motion: "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false }
             ],
             "Friday: Full-Body HIIT & Core": [
-                { id: "f0a", name: "Cardio Intercept Block A", target: "1-Mile Initial Jog warmup", motion: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "f1a", name: "1A. Chin-Up / Pull-Up", target: "3 Sets x 5 Reps (Superset)", motion: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "f1b", name: "1B. Knee-to-Elbow Plank", target: "3 Sets x 30 Sec (Superset)", motion: "https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "f1c", name: "1C. Arm Circles", target: "3 Sets x 15 Sec / Side (Superset)", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "f0b", name: "Cardio Intercept Block B", target: "0.5-Mile Run pacing", motion: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "f2a", name: "2A. Bench Dip", target: "3 Sets x 12 Reps (Superset)", motion: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "f2b", name: "2B. Box Jump", target: "3 Sets x 8 Reps (Superset)", motion: "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "f2c", name: "2C. Hanging Knee Raise", target: "3 Sets x 5-10 Reps (Superset)", motion: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "f0c", name: "Cardio Intercept Block C", target: "0.5-Mile Run pacing", motion: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "f3a", name: "3A. Thruster (Squat to Press)", target: "3 Sets x 10 Reps (Superset)", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "f3b", name: "3B. Plank Walk-Out", target: "3 Sets x 5 Reps (Superset)", motion: "https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "f3c", name: "3C. Crunch", target: "3 Sets x 10 Reps (Superset)", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "f0d", name: "Cardio Finisher Block", target: "1-Mile Sustained Run out", motion: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80", completed: false }
+                { id: "f1a", name: "1A. Chin-Up / Pull-Up", target: "3 Sets x 5 Reps", motion: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=xaf-d-sigzg", completed: false },
+                { id: "f2a", name: "2A. Bench Dip", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
+                { id: "f3a", name: "3A. Thruster (Squat to Press)", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=G9SYHY5shwc", completed: false }
             ],
-            "Saturday: Calisthenics & Balance": [
-                { id: "sat0", name: "Warmup Base Rowing", target: "5-Minute Rowing Machine session", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "s1a", name: "1A. Push-Up Pause (Hold Peak)", target: "3 Sets x 10 Reps (Superset)", motion: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "s1b", name: "1B. TRX Pistol Squat", target: "3 Sets x 10 Reps / Leg (Superset)", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "s2a", name: "2A. Kettlebell Swing", target: "3 Sets x 30 Reps (Superset)", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "s2b", name: "2B. Bird Feeder Deadlift", target: "3 Sets x 10 Reps / Leg (Superset)", motion: "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "s3a", name: "3A. Squatted Crab Walk (Banded)", target: "3 Sets x 20 Total Steps", motion: "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "s4a", name: "4A. Jump-Rope Intervals", target: "4 Sets x 60 Seconds Active", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "s5a", name: "5A. Bird Dog Focus", target: "3 Sets x 10 Reps (5/side) (Superset)", motion: "https://images.unsplash.com/photo-1600881333168-2ef49b341f30?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "s5b", name: "5B. TRX Pike", target: "3 Sets x 10 Reps (Superset)", motion: "https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "s6a", name: "6A. Battle Ropes Wave", target: "3 Sets x 25 Seconds (Superset)", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", completed: false },
-                { id: "s6b", name: "6B. Bench Hop Over", target: "3 Sets x 25 Seconds (Superset)", motion: "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=400&q=80", completed: false }
+            "WORKOUTBody: 10-Min Home Burner": [
+                { id: "wb1", name: "1. Crab Walk Alignment", target: "45 Seconds Active", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
+                { id: "wb2", name: "2. Bridge March Evolution", target: "12 Controlled Reps", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
+                { id: "wb3", name: "3. Double Battle Waves", target: "30 Seconds Full Force", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=dUh2d8kjuyQ", completed: false }
             ],
-            "Sunday: Active Recovery": [
-                { id: "sun1", name: "Low Intensity Outdoor Walk", target: "45 Minutes Continuous Movement", motion: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80", completed: false }
+            "WORKOUTBody: Morning Mobility": [
+                { id: "wbm1", name: "1. Full Body Reach Flow", target: "60 Seconds Continuous", motion: "https://images.unsplash.com/photo-1600881333168-2ef49b341f30?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=G9SYHY5shwc", completed: false },
+                { id: "wbm2", name: "2. Deep Spinal Decompression", target: "45 Seconds Static Hold", motion: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=G9SYHY5shwc", completed: false }
             ]
         };
 
@@ -249,9 +213,12 @@
 
                 container.innerHTML += `
                     <div class="bg-slate-900 border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
-                        <!-- Contextually accurate targeted exercise guide imagery -->
                         <div class="w-full h-36 bg-slate-950 relative overflow-hidden border-b border-slate-800">
                             <img src="${ex.motion}" alt="${ex.name}" class="w-full h-full object-cover opacity-60">
+                            <!-- Direct Video Trigger Link Badge overlay structure -->
+                            <a href="${ex.video}" target="_blank" class="absolute bottom-2 right-2 bg-slate-950/90 hover:bg-red-600 backdrop-blur border border-slate-800 text-[10px] text-white font-bold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1">
+                                📹 Watch Video Guide
+                            </a>
                         </div>
                         <div class="p-4 flex flex-col gap-3">
                             <div>
