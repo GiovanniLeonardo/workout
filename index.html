@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Spartan Fit50 // Master Edition</title>
-    <!-- Tailwind CSS for smooth, fluid mobile utility design -->
+    <title>Spartan Fit50 // Full Program</title>
+    <!-- Tailwind CSS for smooth mobile utility design -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -17,7 +17,7 @@
     <header class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 px-4 py-3 flex items-center justify-between">
         <div>
             <span class="text-xs font-bold tracking-widest text-orange-500 uppercase">SPARTAN MASTER PROGRAM</span>
-            <h1 class="text-lg font-bold text-slate-100 flex items-center gap-1">Fit50 <span class="font-light text-slate-400">| PRO</span></h1>
+            <h1 class="text-lg font-bold text-slate-100 flex items-center gap-1">Fit50 <span class="font-light text-slate-400">| PROe</span></h1>
         </div>
         <!-- User Badge identity frame -->
         <div class="bg-slate-800 border border-slate-700 rounded-full px-3 py-1 flex items-center gap-1.5">
@@ -52,7 +52,7 @@
 
             <!-- Log Submission Button -->
             <button onclick="submitWorkout()" class="w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-orange-500/10 transition-all active:scale-[0.99] cursor-pointer text-center text-sm">
-                Log Completed Workout
+                Log Completed Workout to Feed
             </button>
         </div>
 
@@ -117,7 +117,7 @@
         // PASTE YOUR SHEETDB API KEY LINK DIRECTLY HERE
         const SHEETDB_API_URL = "https://sheetdb.io/api/v1/o8eo17xa2gyvq"; 
 
-        // Fully expanded Spartan Lean Muscle Training Program with verified, precise movement imagery
+        // ALL exercises from the official 4-Week Spartan Lean Program with verified, context-accurate imagery
         const spartanProgram = {
             "Monday: Full-Body Strength": [
                 { id: "m1", name: "Bodyweight Squat", target: "3 Sets x 20 Reps", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80", completed: false },
@@ -201,7 +201,8 @@
 
                 container.innerHTML += `
                     <div class="bg-slate-900 border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
-                        <div class="w-full h-32 bg-slate-950 relative overflow-hidden border-b border-slate-800">
+                        <!-- Accurate exercise movement image -->
+                        <div class="w-full h-36 bg-slate-950 relative overflow-hidden border-b border-slate-800">
                             <img src="${ex.motion}" alt="${ex.name}" class="w-full h-full object-cover opacity-60">
                         </div>
                         <div class="p-4 flex flex-col gap-3">
