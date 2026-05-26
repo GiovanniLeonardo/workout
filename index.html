@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Fit50 // Master Training Hub</title>
+    <title>Fit50 // Elite Master Hub</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-orange-500/30">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500/30">
 
     <header class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 px-4 py-3 flex items-center justify-between">
         <div>
-            <span class="text-xs font-bold tracking-widest text-orange-500 uppercase">WORKOUT COLLABORATION ENGINE</span>
-            <h1 class="text-lg font-bold text-slate-100 flex items-center gap-1">Fit50 <span class="font-light text-slate-400">| PRO</span></h1>
+            <span class="text-xs font-bold tracking-widest text-amber-500 uppercase">WORKOUT ENGINE</span>
+            <h1 class="text-lg font-bold text-slate-100 flex items-center gap-1">Fit50 <span class="font-light text-slate-400">| Hub</span></h1>
         </div>
         <div class="bg-slate-800 border border-slate-700 rounded-full px-3 py-1 flex items-center gap-1.5">
-            <div class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></div>
+            <div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
             <span id="userBadge" class="text-xs font-medium text-slate-300" onclick="changeName()">Loading...</span>
         </div>
     </header>
@@ -27,14 +27,47 @@
         
         <div id="workoutView" class="space-y-6">
             
-            <button onclick="toggleNutritionModal(true)" class="w-full bg-slate-900 hover:bg-slate-800 text-emerald-400 text-xs font-bold py-3 px-4 rounded-xl border border-emerald-500/20 flex items-center justify-center gap-2 transition-all cursor-pointer">
-                🥗 Post-Workout Nutrition & Drink Guide
-            </button>
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="toggleNutritionModal(true)" class="bg-slate-900 hover:bg-slate-800 text-emerald-400 text-[11px] font-bold py-3 px-2 rounded-xl border border-emerald-500/20 flex items-center justify-center gap-1 transition-all cursor-pointer">
+                    🥗 Nutrition Guide
+                </button>
+                <button onclick="toggleCustomWorkoutForm()" class="bg-slate-900 hover:bg-slate-800 text-amber-400 text-[11px] font-bold py-3 px-2 rounded-xl border border-amber-500/20 flex items-center justify-center gap-1 transition-all cursor-pointer">
+                    ➕ Add Custom Workout
+                </button>
+            </div>
+
+            <div id="customWorkoutForm" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3 shadow-xl">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400">Create Custom Exercise</h3>
+                <div class="space-y-2 text-xs">
+                    <div>
+                        <label class="block text-slate-400 mb-1">Exercise Name</label>
+                        <input id="customName" type="text" placeholder="e.g., Diamond Push-ups" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">Target Sets & Reps</label>
+                        <input id="customTarget" type="text" placeholder="e.g., 3 Sets x 12 Reps" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">Target Training System</label>
+                        <select id="customSystem" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
+                            <option value="spartan">🛡️ Spartan 4-Week</option>
+                            <option value="workoutbody">🔥 @WORKOUTBody</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">How-To Video or Picture Link (Optional)</label>
+                        <input id="customMedia" type="text" placeholder="https://youtube.com/... or https://..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <button onclick="saveCustomExercise()" class="w-full bg-amber-700 hover:bg-amber-600 text-white font-bold py-2.5 rounded-xl transition-all mt-2 text-xs">
+                        Inject Exercise into Plan
+                    </button>
+                </div>
+            </div>
 
             <div class="space-y-1.5">
                 <label class="text-[11px] font-bold text-slate-400 tracking-wider uppercase block">Select Training System</label>
                 <div class="grid grid-cols-2 gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800">
-                    <button id="btnSystemSpartan" onclick="switchTrainingSystem('spartan')" class="text-xs font-bold py-2.5 rounded-lg transition-all cursor-pointer text-center bg-orange-600 text-white shadow-md">
+                    <button id="btnSystemSpartan" onclick="switchTrainingSystem('spartan')" class="text-xs font-bold py-2.5 rounded-lg transition-all cursor-pointer text-center bg-amber-700 text-white shadow-md">
                         🛡️ Spartan 4-Week
                     </button>
                     <button id="btnSystemWOB" onclick="switchTrainingSystem('workoutbody')" class="text-xs font-bold py-2.5 rounded-lg transition-all cursor-pointer text-center text-slate-400 hover:text-slate-200">
@@ -45,14 +78,14 @@
 
             <div class="space-y-1.5">
                 <label class="text-[11px] font-bold text-slate-400 tracking-wider uppercase block" id="dropdownLabel">Select Target Spartan Split</label>
-                <select id="workoutSelector" onchange="onWorkoutChanged(this.value)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-3 text-sm text-slate-200 font-semibold focus:outline-none focus:border-orange-500 cursor-pointer">
+                <select id="workoutSelector" onchange="onWorkoutChanged(this.value)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-3 text-sm text-slate-200 font-semibold focus:outline-none focus:border-amber-500 cursor-pointer">
                     </select>
             </div>
 
             <div id="exerciseContainer" class="space-y-4">
                 </div>
 
-            <button onclick="submitWorkout()" class="w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-orange-500/10 transition-all active:scale-[0.99] cursor-pointer text-center text-sm">
+            <button onclick="submitWorkout()" class="w-full bg-gradient-to-r from-amber-800 to-amber-700 hover:from-amber-700 hover:to-amber-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-[0.99] cursor-pointer text-center text-sm">
                 Log Completed Workout to Feed
             </button>
         </div>
@@ -60,7 +93,7 @@
         <div id="feedView" class="space-y-4 hidden">
             <div class="flex justify-between items-center mb-2">
                 <h2 class="text-sm font-semibold tracking-wider text-slate-400 uppercase">Squad Performance Feed</h2>
-                <button onclick="fetchFeed()" class="text-xs text-orange-400 font-medium bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-lg">Refresh</button>
+                <button onclick="fetchFeed()" class="text-xs text-amber-500 font-medium bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-lg">Refresh</button>
             </div>
             <div id="feedContainer" class="space-y-3">
                 </div>
@@ -75,7 +108,7 @@
             </div>
             <div class="p-4 overflow-y-auto space-y-4 text-xs leading-relaxed text-slate-300">
                 <div>
-                    <h4 class="font-bold text-slate-100 uppercase tracking-wide text-[11px] text-orange-400 mb-1">Recommended Clean Foods</h4>
+                    <h4 class="font-bold text-slate-100 uppercase tracking-wide text-[11px] text-amber-500 mb-1">Recommended Clean Foods</h4>
                     <ul class="list-disc pl-4 space-y-1 text-slate-300">
                         <li><strong>Lean Protein:</strong> Grilled chicken breast, wild salmon, or egg whites to speed up muscle fiber density recovery.</li>
                         <li><strong>Smart Carbs:</strong> Sweet potatoes, quinoa, or oatmeal to restock depleted glycogen without creating insulin surges.</li>
@@ -83,7 +116,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold text-slate-100 uppercase tracking-wide text-[11px] text-orange-400 mb-1">Hydration & Recovery Drinks</h4>
+                    <h4 class="font-bold text-slate-100 uppercase tracking-wide text-[11px] text-amber-500 mb-1">Hydration & Recovery Drinks</h4>
                     <ul class="list-disc pl-4 space-y-1 text-slate-300">
                         <li><strong>Pure Water:</strong> Minimum 16-24 oz post-workout to support standard metabolic efficiency.</li>
                         <li><strong>Electrolyte Water:</strong> Unsweetened coconut water or electrolyte drop-ins to replace lost sodium without hidden sugars.</li>
@@ -99,7 +132,7 @@
 
     <nav class="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/90 backdrop-blur-lg border-t border-slate-800 px-6 py-2 max-w-md mx-auto rounded-t-2xl shadow-2xl">
         <div class="flex justify-around items-center">
-            <button id="navWorkout" onclick="switchTab('workout')" class="flex flex-col items-center gap-1 py-1 px-4 text-orange-400 transition-colors cursor-pointer">
+            <button id="navWorkout" onclick="switchTab('workout')" class="flex flex-col items-center gap-1 py-1 px-4 text-amber-500 transition-colors cursor-pointer">
                 <span class="text-lg">🏋️‍♂️</span>
                 <span class="text-[10px] font-semibold tracking-wide">Workouts</span>
             </button>
@@ -118,52 +151,52 @@
         const programs = {
             spartan: {
                 "Monday: Full-Body Strength": [
-                    { id: "sm1", name: "1A. Bodyweight Squat", target: "3 Sets x 20 Reps", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
-                    { id: "sm2", name: "1B. Push-Up", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
-                    { id: "sm3", name: "1C. Sit-Up", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=G9SYHY5shwc", completed: false },
-                    { id: "sm4", name: "2. Barbell Bench Press", target: "4 Sets x 6 Reps", motion: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=dUh2d8kjuyQ", completed: false },
-                    { id: "sm5", name: "3. Barbell Squat", target: "4 Sets x 8 Reps", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
-                    { id: "sm6", name: "4. Standing Military Press", target: "4 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=G9SYHY5shwc", completed: false },
-                    { id: "sm7", name: "5. Barbell Deadlift", target: "4 Sets x 6-8 Reps", motion: "https://images.unsplash.com/photo-1605296867304-46d5465a25f1?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=dUh2d8kjuyQ", completed: false }
+                    { id: "sm1", name: "1A. Bodyweight Squat", target: "3 Sets x 20 Reps", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=bodyweight+squat+form", completed: false },
+                    { id: "sm2", name: "1B. Push-Up", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=perfect+push+up+form", completed: false },
+                    { id: "sm3", name: "1C. Sit-Up", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=proper+sit+up+technique", completed: false },
+                    { id: "sm4", name: "2. Barbell Bench Press", target: "4 Sets x 6 Reps", motion: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=barbell+bench+press+guide", completed: false },
+                    { id: "sm5", name: "3. Barbell Squat", target: "4 Sets x 8 Reps", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=barbell+squat+form+tips", completed: false },
+                    { id: "sm6", name: "4. Standing Military Press", target: "4 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=standing+military+press+tutorial", completed: false },
+                    { id: "sm7", name: "5. Barbell Deadlift", target: "4 Sets x 6-8 Reps", motion: "https://images.unsplash.com/photo-1605296867304-46d5465a25f1?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=barbell+deadlift+proper+form", completed: false }
                 ],
                 "Tuesday: Upper-Body HIIT": [
-                    { id: "st1", name: "Warmup: Cardio Running", target: "Continuous 2-Mile Jog", motion: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=dUh2d8kjuyQ", completed: false },
-                    { id: "st2", name: "1A. Incline DB Chest Fly", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1605296867424-35ddafae336c?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
-                    { id: "st3", name: "2. Burpee", target: "7 Sets x 8 Reps", motion: "https://images.unsplash.com/photo-1543975200-8e313fb04fc7?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
-                    { id: "st4", name: "3A. Tripod Row (Single-Arm)", target: "3 Sets x 10 Reps / Side", motion: "https://images.unsplash.com/photo-1605296867304-46d5465a25f1?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=xaf-d-sigzg", completed: false },
-                    { id: "st5", name: "4A. Hammer Curl", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false }
+                    { id: "st1", name: "Warmup: Cardio Running", target: "Continuous 2-Mile Jog", motion: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=running+form+for+longevity", completed: false },
+                    { id: "st2", name: "1A. Incline DB Chest Fly", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1605296867424-35ddafae336c?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=incline+dumbbell+fly+form", completed: false },
+                    { id: "st3", name: "2. Burpee", target: "7 Sets x 8 Reps", motion: "https://images.unsplash.com/photo-1543975200-8e313fb04fc7?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=how+to+do+a+burpee+safely", completed: false },
+                    { id: "st4", name: "3A. Tripod Row (Single-Arm)", target: "3 Sets x 10 Reps / Side", motion: "https://images.unsplash.com/photo-1605296867304-46d5465a25f1?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=single+arm+dumbbell+row+tripod", completed: false },
+                    { id: "st5", name: "4A. Hammer Curl", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=dumbbell+hammer+curls", completed: false }
                 ],
                 "Wednesday: Lower-Body HIIT": [
-                    { id: "sw1", name: "Cardio: Bike Flow", target: "4 Miles Stationary Bike", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=dUh2d8kjuyQ", completed: false },
-                    { id: "sw2", name: "1A. Goblet Squat", target: "3 Sets x 15 Reps", motion: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
-                    { id: "sw3", name: "1B. Romanian Deadlift", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=dUh2d8kjuyQ", completed: false },
-                    { id: "sw4", name: "2. Walking Lunge", target: "5 Sets x 20 Reps Total", motion: "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false }
+                    { id: "sw1", name: "Cardio: Bike Flow", target: "4 Miles Stationary Bike", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=stationary+bike+workout+tips", completed: false },
+                    { id: "sw2", name: "1A. Goblet Squat", target: "3 Sets x 15 Reps", motion: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=dumbbell+goblet+squat+form", completed: false },
+                    { id: "sw3", name: "1B. Romanian Deadlift", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=dumbbell+romanian+deadlift", completed: false },
+                    { id: "sw4", name: "2. Walking Lunge", target: "5 Sets x 20 Reps Total", motion: "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=walking+lunges+form", completed: false }
                 ],
                 "Friday: Full-Body HIIT & Core": [
-                    { id: "sf1", name: "1A. Chin-Up / Pull-Up", target: "3 Sets x 5 Reps", motion: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=xaf-d-sigzg", completed: false },
-                    { id: "sf2", name: "2A. Bench Dip", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
-                    { id: "sf3", name: "3A. Thruster (Squat to Press)", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=G9SYHY5shwc", completed: false }
+                    { id: "sf1", name: "1A. Chin-Up / Pull-Up", target: "3 Sets x 5 Reps", motion: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=how+to+do+a+proper+pull+up", completed: false },
+                    { id: "sf2", name: "2A. Bench Dip", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=bench+dips+triceps", completed: false },
+                    { id: "sf3", name: "3A. Thruster (Squat to Press)", target: "3 Sets x 10 Reps", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=dumbbell+thrusters+form", completed: false }
                 ]
             },
             workoutbody: {
                 "Chest & Front Shoulders": [
-                    { id: "wb1", name: "Dumbbell Bench Press", target: "4 Sets x 12 Reps (Lean Hypertrophy)", motion: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=dUh2d8kjuyQ", completed: false },
-                    { id: "wb2", name: "Incline Push-Ups", target: "3 Sets x 15 Reps", motion: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
-                    { id: "wb3", name: "Dumbbell Shoulder Press", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=G9SYHY5shwc", completed: false }
+                    { id: "wb1", name: "Dumbbell Bench Press", target: "4 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=dumbbell+bench+press+form", completed: false },
+                    { id: "wb2", name: "Incline Push-Ups", target: "3 Sets x 15 Reps", motion: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=incline+push+ups+chest", completed: false },
+                    { id: "wb3", name: "Dumbbell Shoulder Press", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=dumbbell+shoulder+press+form", completed: false }
                 ],
                 "Back & Rear Delts": [
-                    { id: "wb4", name: "Dumbbell Rows (Supported)", target: "4 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1605296867304-46d5465a25f1?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=xaf-d-sigzg", completed: false },
-                    { id: "wb5", name: "Rear Delt Reverse Flyes", target: "3 Sets x 15 Reps", motion: "https://images.unsplash.com/photo-1605296867424-35ddafae336c?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false }
+                    { id: "wb4", name: "Dumbbell Rows (Supported)", target: "4 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1605296867304-46d5465a25f1?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=chest+supported+dumbbell+row", completed: false },
+                    { id: "wb5", name: "Rear Delt Reverse Flyes", target: "3 Sets x 15 Reps", motion: "https://images.unsplash.com/photo-1605296867424-35ddafae336c?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=dumbbell+rear+delt+fly", completed: false }
                 ],
                 "Legs, Arms & Core Burner": [
-                    { id: "wb6", name: "Dumbbell Goblet Squat", target: "4 Sets x 15 Reps", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
-                    { id: "wb7", name: "Hammer Curls", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=t-WdiOxZ4vg", completed: false },
-                    { id: "wb8", name: "Bicycle Crunch Evolution", target: "3 Sets x 30 Reps", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/watch?v=G9SYHY5shwc", completed: false }
+                    { id: "wb6", name: "Dumbbell Goblet Squat", target: "4 Sets x 15 Reps", motion: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=goblet+squat+technique", completed: false },
+                    { id: "wb7", name: "Hammer Curls", target: "3 Sets x 12 Reps", motion: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=how+to+do+hammer+curls", completed: false },
+                    { id: "wb8", name: "Bicycle Crunch Evolution", target: "3 Sets x 30 Reps", motion: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80", video: "https://www.youtube.com/results?search_query=bicycle+crunches+abs", completed: false }
                 ]
             }
         };
 
-        let currentSystem = 'spartan'; // 'spartan' or 'workoutbody'
+        let currentSystem = 'spartan'; 
         let activeWorkoutKey = Object.keys(programs[currentSystem])[0];
         let userName = localStorage.getItem('fit50_name') || "Athlete_" + Math.floor(Math.random() * 900 + 100);
 
@@ -184,6 +217,53 @@
             }
         }
 
+        function toggleCustomWorkoutForm() {
+            const form = document.getElementById('customWorkoutForm');
+            form.classList.toggle('hidden');
+        }
+
+        function saveCustomExercise() {
+            const name = document.getElementById('customName').value.trim();
+            const target = document.getElementById('customTarget').value.trim();
+            const system = document.getElementById('customSystem').value;
+            let media = document.getElementById('customMedia').value.trim();
+
+            if (!name || !target) {
+                alert("Please fill out the exercise name and target specifications!");
+                return;
+            }
+
+            // Fallback default image placeholder if media path is left empty
+            if (!media) {
+                media = "https://images.unsplash.com/photo-1600881333168-2ef49b341f30?auto=format&fit=crop&w=400&q=80";
+            }
+
+            const targetSplit = Object.keys(programs[system])[0]; 
+            const newExercise = {
+                id: "custom_" + Date.now(),
+                name: "⭐ " + name,
+                target: target,
+                motion: media.startsWith('http') ? media : "https://images.unsplash.com/photo-1600881333168-2ef49b341f30?auto=format&fit=crop&w=400&q=80",
+                video: media.startsWith('http') ? media : `https://www.youtube.com/results?search_query=${encodeURIComponent(name)}`,
+                completed: false
+            };
+
+            programs[system][targetSplit].push(newExercise);
+            
+            // UI State Cleanup
+            document.getElementById('customName').value = '';
+            document.getElementById('customTarget').value = '';
+            document.getElementById('customMedia').value = '';
+            toggleCustomWorkoutForm();
+            
+            if(currentSystem === system) {
+                renderExercises();
+            } else {
+                switchTrainingSystem(system);
+            }
+            alert("Custom exercise added successfully to the current focus list!");
+        }
+
         function switchTrainingSystem(systemKey) {
             currentSystem = systemKey;
             activeWorkoutKey = Object.keys(programs[currentSystem])[0];
@@ -193,12 +273,12 @@
             const label = document.getElementById('dropdownLabel');
 
             if (systemKey === 'spartan') {
-                btnSpartan.className = "text-xs font-bold py-2.5 rounded-lg transition-all cursor-pointer text-center bg-orange-600 text-white shadow-md";
+                btnSpartan.className = "text-xs font-bold py-2.5 rounded-lg transition-all cursor-pointer text-center bg-amber-700 text-white shadow-md";
                 btnWOB.className = "text-xs font-bold py-2.5 rounded-lg transition-all cursor-pointer text-center text-slate-400 hover:text-slate-200";
                 label.innerText = "Select Target Spartan Split";
             } else {
                 btnSpartan.className = "text-xs font-bold py-2.5 rounded-lg transition-all cursor-pointer text-center text-slate-400 hover:text-slate-200";
-                btnWOB.className = "text-xs font-bold py-2.5 rounded-lg transition-all cursor-pointer text-center bg-orange-600 text-white shadow-md";
+                btnWOB.className = "text-xs font-bold py-2.5 rounded-lg transition-all cursor-pointer text-center bg-amber-700 text-white shadow-md";
                 label.innerText = "Select Target @WORKOUTBody Muscle Split";
             }
 
@@ -230,21 +310,21 @@
             programs[currentSystem][activeWorkoutKey].forEach(ex => {
                 const btnClass = ex.completed 
                     ? "bg-emerald-600 hover:bg-emerald-500 text-white font-bold" 
-                    : "bg-orange-600 hover:bg-orange-500 text-white font-semibold";
+                    : "bg-amber-700/80 hover:bg-amber-600 text-slate-100 font-semibold";
                 const btnText = ex.completed ? "✓ Completed" : "Mark Exercise Complete";
 
                 container.innerHTML += `
                     <div class="bg-slate-900 border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
                         <div class="w-full h-36 bg-slate-950 relative overflow-hidden border-b border-slate-800">
-                            <img src="${ex.motion}" alt="${ex.name}" class="w-full h-full object-cover opacity-60">
-                            <a href="${ex.video}" target="_blank" class="absolute bottom-2 right-2 bg-slate-950/90 hover:bg-red-600 backdrop-blur border border-slate-800 text-[10px] text-white font-bold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1">
+                            <img src="${ex.motion}" alt="${ex.name}" class="w-full h-full object-cover opacity-60" onerror="this.src='https://images.unsplash.com/photo-1600881333168-2ef49b341f30?auto=format&fit=crop&w=400&q=80'">
+                            <a href="${ex.video}" target="_blank" class="absolute bottom-2 right-2 bg-slate-950/90 hover:bg-amber-700 backdrop-blur border border-slate-800 text-[10px] text-white font-bold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1">
                                 📹 Watch Video Guide
                             </a>
                         </div>
                         <div class="p-4 flex flex-col gap-3">
                             <div>
                                 <h3 class="text-sm font-bold tracking-tight text-slate-100">${ex.name}</h3>
-                                <p class="text-[11px] text-orange-400 font-semibold mt-0.5">${ex.target}</p>
+                                <p class="text-[11px] text-amber-500 font-semibold mt-0.5">${ex.target}</p>
                             </div>
                             <button onclick="toggleExerciseComplete('${ex.id}')" class="w-full ${btnClass} text-xs py-3 rounded-xl transition-all cursor-pointer text-center">
                                 ${btnText}
@@ -281,13 +361,13 @@
             if (target === 'workout') {
                 workoutView.classList.remove('hidden');
                 feedView.classList.add('hidden');
-                navWorkout.className = "flex flex-col items-center gap-1 py-1 px-4 text-orange-400 transition-colors cursor-pointer";
+                navWorkout.className = "flex flex-col items-center gap-1 py-1 px-4 text-amber-500 transition-colors cursor-pointer";
                 navFeed.className = "flex flex-col items-center gap-1 py-1 px-4 text-slate-400 transition-colors cursor-pointer";
             } else {
                 workoutView.classList.add('hidden');
                 feedView.classList.remove('hidden');
                 navWorkout.className = "flex flex-col items-center gap-1 py-1 px-4 text-slate-400 transition-colors cursor-pointer";
-                navFeed.className = "flex flex-col items-center gap-1 py-1 px-4 text-orange-400 transition-colors cursor-pointer";
+                navFeed.className = "flex flex-col items-center gap-1 py-1 px-4 text-amber-500 transition-colors cursor-pointer";
                 fetchFeed();
             }
         }
@@ -298,7 +378,7 @@
             
             currentExercises.forEach(ex => {
                 if (ex.completed) {
-                    completedParts.push(`${ex.name.replace(/^\d+[A-C]?\.\s*/, '')}`);
+                    completedParts.push(`${ex.name.replace(/^\d+[A-C]?\.\s*|⭐\s*/, '')}`);
                 }
             });
 
@@ -356,7 +436,7 @@
                     container.innerHTML += `
                         <div class="bg-slate-900 border border-slate-800/80 rounded-xl p-4 space-y-1.5">
                             <div class="flex justify-between items-center border-b border-slate-800/50 pb-1.5">
-                                <span class="text-xs font-bold text-orange-400">⚡ ${item.user_name}</span>
+                                <span class="text-xs font-bold text-amber-500">⚡ ${item.user_name}</span>
                                 <span class="text-[9px] font-mono text-slate-500">Verified Fit</span>
                             </div>
                             <div>
