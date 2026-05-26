@@ -337,4 +337,42 @@
 
         async function fetchFeed() {
             const container = document.getElementById('feedContainer');
-            container.innerHTML = `<p class="text-center text-xs text-slate-500 py-6
+            container.innerHTML = `<p class="text-center text-xs text-slate-500 py-6 animate-pulse">Syncing data streams from Google Sheet...</p>`;
+
+            try {
+                const response = await fetch(SHEETDB_API_URL);
+                if (!response.ok) throw new Error("Connection failed");
+                
+                let data = await response.json();
+                if (!data || data.length === 0) {
+                    container.innerHTML = `<p class="text-center text-xs text-slate-500 py-8">No workouts uploaded yet.</p>`;
+                    return;
+                }
+
+                data.reverse();
+                container.innerHTML = '';
+                
+                data.slice(0, 20).forEach(item => {
+                    container.innerHTML += `
+                        <div class="bg-slate-900 border border-slate-800/80 rounded-xl p-4 space-y-1.5">
+                            <div class="flex justify-between items-center border-b border-slate-800/50 pb-1.5">
+                                <span class="text-xs font-bold text-orange-400">⚡ ${item.user_name}</span>
+                                <span class="text-[9px] font-mono text-slate-500">Verified Fit</span>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wide block">${item.workout_day}</span>
+                                <p class="text-xs text-slate-300 leading-relaxed mt-1">${item.summary}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error("Read matrix issue:", error);
+                container.innerHTML = `<p class="text-center text-xs text-rose-400 py-6">Could not pull activity data.</p>`;
+            }
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
